@@ -31,7 +31,6 @@ class HomeView(TemplateView):
                 context = self.get_context_data()
 
                 prestamo_agregado= Prestamo.objects.filter(usuario=user,reservado=True)
-                print(prestamo_agregado)
                 if prestamo_agregado:
                     context['boton_reservado']=False
                 else:
@@ -71,12 +70,10 @@ class HomeView(TemplateView):
                     nuevo_prestamo =Prestamo(usuario=user,libro=libro,fecha_emision=None,reservado=True,confirmado=False,fecha_devolucion=None,devuelto=True)
                     
                     nuevo_prestamo.save()
-                    prestamo_agregado= Prestamo.objects.filter(usuario=request.user,libro=libro,reservado=True)
 
                     messages.success(request, 'Libro reservado exitosamente.')
                     context = self.get_context_data()
                     context['libro_reservado'] = nuevo_prestamo
-                    print(f"ESTE ES MI LIBRO RESERVADO:", prestamo_agregado[0].libro.codigo)
                     
                     context['boton_reservado']=False
                 
@@ -114,7 +111,6 @@ class HomeView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        # Verifica si el usuario tiene un rol
         if self.request.user.rol:
             rol_nombre = self.request.user.rol.nombre
             context['rol_nombre'] = rol_nombre

@@ -12,11 +12,9 @@ def prestamo_confirmar_view(request):
         cancelar = request.POST.get('cancelar_prestamo','')
 
         prestamo = Prestamo.objects.get(usuario=request.user, reservado=True, confirmado=False)
-        print(f"libro reservado", prestamo)
 
 
         if(cancelar!=''):
-            print("entreee")
             prestamo.libro.cantidad_disponible += 1
             prestamo.libro.save()
             prestamo.delete()
@@ -31,6 +29,5 @@ def prestamo_confirmar_view(request):
 
 
         return redirect("home")
-    # render(request, "biblioteca/home.html",{"boton_reservado":True} )
     except Exception as e:
         return JsonResponse({'success': False, 'message': str(e)})
