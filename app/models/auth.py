@@ -138,7 +138,7 @@ class User(AbstractBaseUser):
     email = models.EmailField(unique=True, max_length=100, verbose_name="email address")
     password = models.CharField(max_length=255, null=False)
     
-    rol = models.ForeignKey(Rol, on_delete=models.SET_NULL, null=True, default=1)
+    rol = models.ForeignKey(Rol, on_delete=models.SET_NULL, null=True)
 
     is_active = models.BooleanField(null=False, default=True)
     created_at = models.DateTimeField(auto_created=True, auto_now=True, null=False)
